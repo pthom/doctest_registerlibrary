@@ -26,7 +26,7 @@ doctest_registerlibrary(MyLibrary)
 ```
 
 This one-liner will :
-- ensure that all tests are actually run
+- ensure that all tests are actually run. It will add minimal modifications to your code in order to ensure this. More details about this in the [examples](examples/) 
 - append the doctest include path to your library
 - create an exectuable test target for your library
 - register it as a cmake test (so that `ctest` or `make test`) will launch it.
