@@ -91,7 +91,7 @@ doctest_registerlibrary(MyLibrary)
 
 ##### doctest_registercppfiles
 `doctest_registercppfiles(YourLibrary)` will make some small changes to your cpp files in order to ensure that tests are actually run :
-  - It will modify your cpp files by adding a dummy `function DocTestRegister_\[GUID\]()`.
+  - It will modify your cpp files by adding a dummy function `DocTestRegister_[GUID]()`.
   This modification is done only once, and can be committed.
   - It will create a file `doctest_registerlibrary.cpp` that will call these dummy functions : this is the secret in order to make the self-registration of tests work with a static library.
   This file can also be committed and will only be modified when new source files are added to the library.
