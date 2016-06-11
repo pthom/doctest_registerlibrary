@@ -26,7 +26,7 @@ doctest_registerlibrary(MyLibrary)
 ```
 
 This one-liner will :
-- ensure that all tests are actually run. It will add minimal modifications to your code in order to ensure this. More details about this in the [examples](examples/) 
+- ensure that all tests are actually run. It will add minimal modifications to your code in order to ensure this. More details about this in the [examples](examples/)
 - append the doctest include path to your library
 - create an exectuable test target for your library
 - register it as a cmake test (so that `ctest` or `make test`) will launch it.
@@ -89,14 +89,25 @@ doctest_registerlibrary(MyLibrary)
 
 `doctest_registerlibrary()` does different actions that can be called separately. See below  for the detail of those actions.
 
+### auto-generated code
+
 ##### doctest_registercppfiles
 `doctest_registercppfiles(YourLibrary)` will make some small changes to your cpp files in order to ensure that tests are actually run :
   - It will modify your cpp files by adding a dummy function `DocTestRegister_[GUID]()`.
   This modification is done only once, and can be committed.
-  - It will create a file `doctest_registerlibrary.cpp` that will call these dummy functions : this is the secret in order to make the self-registration of tests work with a static library.
-  This file can also be committed and will only be modified when new source files are added to the library.
 
-  See [the examples](examples/) for more details.
+
+##### doctest_create_registermainfile
+`doctest_create_registermainfile(YourLibrary)` will create a file `doctest_registerlibrary.cpp` that will call these dummy functions : this is the secret in order to make the self-registration of tests work with a static library.
+This file can also be committed and will only be modified when new source files are added to the library.
+
+Gotcha : any .cpp file in the library folder/subfolders must be referenced in you library source files, otherwise you may get a link error. Create this file by hand in case of problem.
+
+##### More details
+
+See [the examples](examples/) for more details.
+
+### Utilities
 
 ##### doctest_appendregisterlibrarycpp_tosources
 `doctest_appendregisterlibrarycpp_tosources(YourLibrary)` can be used in conjunction with `doctest_registercppfiles()`. It will add the `doctest_registerlibrary.cpp` file to your library sources files.

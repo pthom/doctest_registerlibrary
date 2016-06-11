@@ -4,11 +4,13 @@ set (doctest_registerlibrary_location ${CMAKE_SOURCE_DIR}/doctest_registerlibrar
 
 function (doctest_registercppfiles libraryName)
   get_target_property(sources ${libraryName} SOURCES)
-  # Step 1 : Modify cpp files in order to add register function (see doctest_register.py -file)
   foreach(source ${sources})
     execute_process(COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -file ${source} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
   endforeach(source)
-  # Step 2 : Create doctest_registerlibrary.cpp file (call doctest_register.py -library)
+endfunction()
+
+function (doctest_create_registermainfile libraryName)
+  get_target_property(sources ${libraryName} SOURCES)
   execute_process(COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -library ${sources} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endfunction()
 
@@ -46,6 +48,7 @@ endfunction()
 function (doctest_registerlibrary libraryName)
   doctest_addincludepath(${libraryName})
   doctest_registercppfiles(${libraryName})
+  doctest_create_registermainfile(${libraryName})
   doctest_appendregisterlibrarycpp_tosources(${libraryName})
 
   set(testTargetName ${libraryName}_DocTest)
