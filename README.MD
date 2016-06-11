@@ -100,8 +100,6 @@ doctest_registerlibrary(MyLibrary)
 `doctest_create_registermainfile(YourLibrary)` will create a file `doctest_registerlibrary.cpp` that will call these dummy functions : this is the secret in order to make the self-registration of tests work with a static library.
 This file can also be committed and will only be modified when new source files are added to the library.
 
-Gotcha : any .cpp file in the library folder/subfolders must be referenced in you library source files, otherwise you may get a link error. Create this file by hand in case of problem.
-
 ##### More details
 
 See [the examples](examples/) for more details.
