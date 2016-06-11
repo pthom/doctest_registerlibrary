@@ -92,8 +92,7 @@ doctest_registerlibrary(MyLibrary)
 ### auto-generated code
 
 ##### doctest_registercppfiles
-`doctest_registercppfiles(YourLibrary)` will make some small changes to your cpp files in order to ensure that tests are actually run :
-  - It will modify your cpp files by adding a dummy function `DocTestRegister_[GUID]()`.
+`doctest_registercppfiles(YourLibrary)` will make some small changes to your cpp files in order to ensure that tests are actually run : it will modify your cpp files by adding a dummy function `DocTestRegister_[GUID]()`.
   This modification is done only once, and can be committed.
 
 
