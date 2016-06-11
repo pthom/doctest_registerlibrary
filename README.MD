@@ -16,7 +16,7 @@ This project provides a solution, based on the further assumption that :
 
 ## Quick usage instructions
 
-`doctest_registerlibrary.cmake` provides a cmake functions that make it possible to add tests to a library, using a one-liner instruction in your `CMakeList.txt` file.
+`doctest_registerlibrary.cmake` provides several cmake functions that make it possible to add tests to a library, using a one-liner instruction in your `CMakeList.txt` file.
 
 For example :
 ```
