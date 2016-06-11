@@ -30,7 +30,7 @@ def ProcessFile(filename):
     if (filename == "doctest_registerlibrary.cpp"):
         return
 
-    allowedExtensions=["cpp", "cc", "c", "cxx"]
+    allowedExtensions=["cpp", "cc", "cxx"]
     file_extension = filename.split(".")[-1]
     if not file_extension in allowedExtensions:
         return
