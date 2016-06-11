@@ -2,7 +2,7 @@
 `example1` is an example of a complete project with a library that will be tested.
 
 Build it by calling `build_example1.sh`
-This will create at folder named `example1.build`. You can run the test with either `ctest` or `make test` inside this folder.
+This will create a folder named `example1.build`. You can run the test with either `ctest` or `make test` inside this folder.
 
 
 ### example1_processed
