@@ -50,5 +50,5 @@ function (doctest_registerlibrary libraryName)
 
   set(testTargetName ${libraryName}_DocTest)
   doctest_maketesttarget(${libraryName} ${testTargetName})
-  doctest_register_ctest({testTargetName})
+  doctest_register_ctest(${testTargetName})
 endfunction()
