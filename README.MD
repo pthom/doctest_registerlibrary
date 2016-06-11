@@ -37,7 +37,7 @@ This one-liner will :
 
 #### Step 1 : include doctest and doctest_registerlibrary in your project
 
-For example, clone [doctest](https://github.com/onqtam/doctest) and [doctest_registerlibrary](https://github.com/pthom/DocTest_LibTest) at the root of your project, such as shown below:
+For example, clone [doctest](https://github.com/onqtam/doctest) and [doctest_registerlibrary](https://github.com/pthom/doctest_registerlibrary) at the root of your project, such as shown below:
 ```
 YourProject/
 ├── CMakeLists.txt
