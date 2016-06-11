@@ -24,13 +24,13 @@ int DocTestRegister()
   return dummy_sum;
 }
 """
+allowedExtensions=["cpp", "cc", "cxx"]
 
 def ProcessFile(filename):
     #print("ProcessFile " + filename)
     if (filename == "doctest_registerlibrary.cpp"):
         return
 
-    allowedExtensions=["cpp", "cc", "cxx"]
     file_extension = filename.split(".")[-1]
     if not file_extension in allowedExtensions:
         return
@@ -56,6 +56,10 @@ def ProcessLibrary(sourcesFiles):
     #print("ProcessLibrary ")
     guidList = []
     for filename in sourcesFiles:
+        file_extension = filename.split(".")[-1]
+        if not file_extension in allowedExtensions:
+            continue
+            
         guid = ""
         with open(filename, 'r') as f:
             lines = f.readlines()
