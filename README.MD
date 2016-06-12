@@ -1,4 +1,4 @@
-# Static/dynamic library "doctesting" made easy with cmake
+  # Static/dynamic library "doctesting" made easy with cmake
 
 #### Motivation
 The [doctest](https://github.com/onqtam/doctest) documentation says rightfully:
@@ -22,13 +22,13 @@ For example :
 ```
 add_library(MyLibrary STATIC lib1.cpp lib2.cpp)
 # The line below will activate the tests for the library !
-doctest_registerlibrary(MyLibrary)  
+doctest_registerlibrary(MyLibrary MyLibraryTest)  
 ```
 
 This one-liner will :
 - ensure that all tests are actually run. It will add minimal modifications to your code in order to ensure this. More details about this in the [examples](examples/)
 - append the doctest include path to your library
-- create an exectuable test target for your library
+- create an executable test target (MyLibraryTest) for your library
 - register it as a cmake test (so that `ctest` or `make test`) will launch it.
 
 
@@ -87,7 +87,7 @@ doctest_registerlibrary(MyLibrary)
 
 ##  'A la carte' instructions
 
-`doctest_registerlibrary()` does different actions that can be called separately. See below  for the detail of those actions.
+`doctest_registerlibrary(YourLibrary YourLibraryTest)` does different actions that can be called separately. See below  for the detail of those actions.
 
 ### auto-generated code
 
@@ -113,7 +113,7 @@ See [the examples](examples/) for more details.
 `doctest_addincludepath(YourLibrary)` will simply add the doctest include path to your library.
 
 ##### doctest_maketesttarget
-`doctest_maketesttarget(YourLibrary YourLibraryTestName))` will create an executable target for your tests
+`doctest_maketesttarget(YourLibrary YourLibraryTest)` will create an executable target for your tests
 
 ##### doctest_register_ctest
-`doctest_register_ctest(YourLibraryTestName)` will register this exe as a test (so that `make test` or `ctest` will launch it)
+`doctest_register_ctest(YourLibraryTest)` will register this exe as a test (so that `make test` or `ctest` will launch it)

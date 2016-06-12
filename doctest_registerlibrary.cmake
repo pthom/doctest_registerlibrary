@@ -45,13 +45,12 @@ function (doctest_register_ctest testTargetName)
 endfunction()
 
 
-function (doctest_registerlibrary libraryName)
+function (doctest_registerlibrary libraryName testTargetName)
   doctest_addincludepath(${libraryName})
   doctest_registercppfiles(${libraryName})
   doctest_create_registermainfile(${libraryName})
   doctest_appendregisterlibrarycpp_tosources(${libraryName})
 
-  set(testTargetName ${libraryName}_DocTest)
   doctest_maketesttarget(${libraryName} ${testTargetName})
   doctest_register_ctest(${testTargetName})
 endfunction()
