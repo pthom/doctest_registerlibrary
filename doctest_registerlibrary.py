@@ -51,15 +51,18 @@ def ProcessFile(filename):
             print(filename + " was modified (added DocTestRegister_ function()")
 
 
+def RegisterCppFiles(sourceFiles):
+    for filename in sourceFiles:
+        ProcessFile(filename)
 
-def ProcessLibrary(sourcesFiles):
+def RegisterMainFile(sourcesFiles):
     #print("ProcessLibrary ")
     guidList = []
     for filename in sourcesFiles:
         file_extension = filename.split(".")[-1]
         if not file_extension in allowedExtensions:
             continue
-            
+
         guid = ""
         with open(filename, 'r') as f:
             lines = f.readlines()
@@ -94,22 +97,24 @@ def ProcessLibrary(sourcesFiles):
 def help():
     helpMessage = """
         Usage :
-            _command_ -file file.cpp
-                Will add a DocTestRegister_GUID() to a cpp file
-            _command_ -library file1.cpp file2.cpp file3.cpp ...
+            _command_ -registercppfiles file1.cpp file2.cpp ...
+                Will add a DocTestRegister_GUID() to cpp files
+            _command_ -registermainfile file1.cpp file2.cpp file3.cpp ...
                 Will create a doctest_registerlibrary.cpp file with one function that calls all DocTestRegister_GUID() functions
     """
     helpMessage = helpMessage.replace("_command_", sys.argv[0])
     print(helpMessage)
 
 def main():
-    if (len(sys.argv) == 0):
+    if (len(sys.argv) < 2):
         help()
-    if (sys.argv[1] == "-file"):
-        file = sys.argv[2]
-        ProcessFile(file)
-    elif (sys.argv[1] == "-library"):
-        ProcessLibrary(sys.argv[2:])
+        exit(1)
+    if (sys.argv[1] == "-registercppfiles"):
+        files = sys.argv[2:]
+        RegisterCppFiles(files)
+    elif (sys.argv[1] == "-registermainfile"):
+        files = sys.argv[2:]
+        RegisterMainFile(files)
     else:
         help()
 

@@ -3,15 +3,15 @@ set (doctest_registerlibrary_location ${CMAKE_SOURCE_DIR}/doctest_registerlibrar
 
 
 function (doctest_registercppfiles libraryName)
+  message(doctest_registercppfiles ${libraryName})
   get_target_property(sources ${libraryName} SOURCES)
-  foreach(source ${sources})
-    execute_process(COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -file ${source} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-  endforeach(source)
+  execute_process(COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -registercppfiles ${sources} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endfunction()
 
 function (doctest_create_registermainfile libraryName)
+  message(doctest_create_registermainfile ${libraryName})
   get_target_property(sources ${libraryName} SOURCES)
-  execute_process(COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -library ${sources} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  execute_process(COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -registermainfile ${sources} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endfunction()
 
 
@@ -46,6 +46,7 @@ endfunction()
 
 
 function (doctest_registerlibrary libraryName testTargetName)
+  message(doctest_registerlibrary ${libraryName})
   doctest_addincludepath(${libraryName})
   doctest_registercppfiles(${libraryName})
   doctest_create_registermainfile(${libraryName})
