@@ -1,4 +1,4 @@
-  # Static/dynamic library "doctesting" made easy with cmake
+# Static/dynamic library "doctesting" made easy with cmake
 
 #### Motivation
 The [doctest](https://github.com/onqtam/doctest) documentation says rightfully:
@@ -93,7 +93,7 @@ doctest_registerlibrary(MyLibrary)
 
 ##### doctest_registercppfiles
 `doctest_registercppfiles(YourLibrary)` will make some small changes to your cpp files in order to ensure that tests are actually run : it will modify your cpp files by adding a dummy function `DocTestRegister_[GUID]()`.
-  This modification is done only once, and can be committed.
+  This modification is done only once, and can be committed. Your cpp files will not be modified unless they actually use doctest (i.e they include `doctest.h` or they include a `TEST_CASE`)
 
 
 ##### doctest_create_registermainfile
