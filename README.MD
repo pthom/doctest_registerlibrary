@@ -76,13 +76,13 @@ enable_testing()
 
 in the `CMakeLists.txt` of your library
 * Include "doctest_registerlibrary.cmake"
-* Call `doctest_registerlibrary(YourLibrary)` (where YourLibrary is the name of your library)
+* Call `doctest_registerlibrary(YourLibrary YourLibraryTest)` (where YourLibrary is the name of your library and YourLibraryTest is the name of the test executable that will be created)
 
 Example :
 ```
 include("${CMAKE_SOURCE_DIR}/doctest_registerlibrary/doctest_registerlibrary.cmake")
 add_library(MyLibrary STATIC lib1.cpp lib2.cpp)
-doctest_registerlibrary(MyLibrary)
+doctest_registerlibrary(YourLibrary YourLibraryTest)
 ```
 
 ##  'A la carte' instructions
