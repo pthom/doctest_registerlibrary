@@ -3,7 +3,6 @@ set (doctest_registerlibrary_location ${CMAKE_SOURCE_DIR}/doctest_registerlibrar
 
 
 function (doctest_registercppfiles libraryName)
-  message(doctest_registercppfiles ${libraryName})
   get_target_property(sources ${libraryName} SOURCES)
   execute_process(COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -registercppfiles ${sources} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endfunction()

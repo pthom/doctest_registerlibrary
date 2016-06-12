@@ -2,6 +2,10 @@
 import sys
 import uuid
 import os.path
+import re
+
+def findWholeWord_Regex(w):
+    return re.compile(r'\b({0})\b'.format(w)).search
 
 FileCode = """
 // This code was added by doctest_registerlibrary.cmake in order to ensure that the tests are properly run by DocTest.
@@ -24,7 +28,23 @@ int DocTestRegister()
   return dummy_sum;
 }
 """
-allowedExtensions=["cpp", "cc", "cxx"]
+allowedExtensions = ["cpp", "cc", "cxx"]
+
+# words that indicate that a file actually uses doctest
+doctest_usage_hints = ["doctest.h", "TEST_CASE", "DOCTEST_TEST_CASE"]
+doctest_usage_hints_re = map(findWholeWord_Regex, doctest_usage_hints)
+
+
+def DoesSourceFileUseDocTest(lines):
+    doctest_tokens=["doctest.h", "TEST_CASE", "DOCTEST_TEST_CASE"]
+    doesFileUseDocTest = False
+    for line in lines:
+        for exp in doctest_usage_hints_re:
+            if exp(line):
+                doesFileUseDocTest = True
+        if (doesFileUseDocTest):
+            break
+    return doesFileUseDocTest
 
 def ProcessFile(filename):
     #print("ProcessFile " + filename)
@@ -37,6 +57,9 @@ def ProcessFile(filename):
 
     with open(filename, 'r') as f:
         lines = f.readlines()
+
+    if not DoesSourceFileUseDocTest(lines):
+        return
 
     tokenPresent = False
     for line in lines:
