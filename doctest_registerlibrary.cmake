@@ -4,18 +4,27 @@ set (doctest_registerlibrary_location ${CMAKE_SOURCE_DIR}/doctest_registerlibrar
 
 function (doctest_registercppfiles libraryName)
   get_target_property(sources ${libraryName} SOURCES)
-  execute_process(COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -registercppfiles ${sources} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  # doctest_registercppfiles is a dependency of the library, so that
+  # it will be called during the build
+  add_custom_target(doctest_registercppfiles_${libraryName} COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -registercppfiles ${sources} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  add_dependencies(${libraryName} doctest_registercppfiles_${libraryName})
+
 endfunction()
 
 function (doctest_create_registermainfile libraryName)
-  message(doctest_create_registermainfile ${libraryName})
   get_target_property(sources ${libraryName} SOURCES)
+
+  # execute_process is executed during cmake : this is important, otherwise
+  # the first cmake might fail if the file doctest_registerlibrary.cpp
+  # was not yet created
   execute_process(COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -registermainfile ${sources} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-endfunction()
 
-
-function (doctest_addincludepath libraryName)
-  target_include_directories(${libraryName} PUBLIC ${doctest_lib_location}/doctest )
+  # Also execute this step during the build
+  add_custom_target(doctest_create_registermainfile${libraryName} COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -registermainfile ${sources} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  add_dependencies(${libraryName} doctest_create_registermainfile${libraryName})
+  if(TARGET doctest_registercppfiles_${libraryName})
+    add_dependencies(doctest_create_registermainfile${libraryName} doctest_registercppfiles_${libraryName})
+  endif()
 endfunction()
 
 
@@ -27,7 +36,7 @@ endfunction()
 function (doctest_appendregisterlibrarycpp_tosources libraryName)
   get_target_property(sources ${libraryName} SOURCES)
 
-  # Step 3 : append doctest_registerlibrary.cpp to the library sources if needed
+  # append doctest_registerlibrary.cpp to the library sources if needed
   if (NOT ";${SOURCES};" MATCHES ";doctest_registerlibrary.cpp;")
     set(sourcesWithRegisterDocTest ${SOURCES} doctest_registerlibrary.cpp)
     target_sources(${libraryName} PRIVATE ${sourcesWithRegisterDocTest})
