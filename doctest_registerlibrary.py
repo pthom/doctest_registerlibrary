@@ -36,7 +36,6 @@ doctest_usage_hints_re = map(findWholeWord_Regex, doctest_usage_hints)
 
 
 def DoesSourceFileUseDocTest(lines):
-    doctest_tokens=["doctest.h", "TEST_CASE", "DOCTEST_TEST_CASE"]
     doesFileUseDocTest = False
     for line in lines:
         for exp in doctest_usage_hints_re:
