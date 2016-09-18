@@ -6,9 +6,9 @@ function (doctest_registercppfiles libraryName)
   get_target_property(sources ${libraryName} SOURCES)
   # doctest_registercppfiles is a dependency of the library, so that
   # it will be called during the build
-  add_custom_target(doctest_registercppfiles_${libraryName} COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -registercppfiles ${sources} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-  add_dependencies(${libraryName} doctest_registercppfiles_${libraryName})
-
+  add_custom_target(dct_registercppfiles_${libraryName} COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -registercppfiles ${sources} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  add_dependencies(${libraryName} dct_registercppfiles_${libraryName})
+  set_target_properties(dct_registercppfiles_${libraryName} PROPERTIES FOLDER dct)
 endfunction()
 
 function (doctest_create_registermainfile libraryName)
@@ -20,10 +20,12 @@ function (doctest_create_registermainfile libraryName)
   execute_process(COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -registermainfile ${sources} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
   # Also execute this step during the build
-  add_custom_target(doctest_create_registermainfile${libraryName} COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -registermainfile ${sources} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-  add_dependencies(${libraryName} doctest_create_registermainfile${libraryName})
-  if(TARGET doctest_registercppfiles_${libraryName})
-    add_dependencies(doctest_create_registermainfile${libraryName} doctest_registercppfiles_${libraryName})
+  add_custom_target(dct_create_registermainfile${libraryName} COMMAND python ${doctest_registerlibrary_location}/doctest_registerlibrary.py -registermainfile ${sources} WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  add_dependencies(${libraryName} dct_create_registermainfile${libraryName})
+  set_target_properties(dct_create_registermainfile${libraryName} PROPERTIES FOLDER dct)
+
+  if(TARGET dct_registercppfiles_${libraryName})
+    add_dependencies(dct_create_registermainfile${libraryName} dct_registercppfiles_${libraryName})
   endif()
 endfunction()
 
@@ -53,8 +55,8 @@ function (doctest_register_ctest testTargetName)
 endfunction()
 
 
-function (doctest_registerlibrary libraryName testTargetName)
-  message(doctest_registerlibrary ${libraryName})
+function (doctest_register_static_library libraryName testTargetName)
+  # message("doctest_register_static_library " ${libraryName})
   doctest_addincludepath(${libraryName})
   doctest_registercppfiles(${libraryName})
   doctest_create_registermainfile(${libraryName})
