@@ -1,4 +1,4 @@
-# Static/dynamic library "doctesting" made easy with cmake
+# Static library "doctesting" made easy with cmake
 
 #### Motivation
 The [doctest](https://github.com/onqtam/doctest) documentation says rightfully:
@@ -22,7 +22,7 @@ For example :
 ```
 add_library(MyLibrary STATIC lib1.cpp lib2.cpp)
 # The line below will activate the tests for the library !
-doctest_registerlibrary(MyLibrary MyLibraryTest)  
+doctest_register_static_library(MyLibrary MyLibraryTest)  
 ```
 
 This one-liner will :
@@ -76,18 +76,18 @@ enable_testing()
 
 in the `CMakeLists.txt` of your library
 * Include "doctest_registerlibrary.cmake"
-* Call `doctest_registerlibrary(YourLibrary YourLibraryTest)` (where YourLibrary is the name of your library and YourLibraryTest is the name of the test executable that will be created)
+* Call `doctest_register_static_library(YourLibrary YourLibraryTest)` (where YourLibrary is the name of your library and YourLibraryTest is the name of the test executable that will be created)
 
 Example :
 ```
 include("${CMAKE_SOURCE_DIR}/doctest_registerlibrary/doctest_registerlibrary.cmake")
 add_library(MyLibrary STATIC lib1.cpp lib2.cpp)
-doctest_registerlibrary(YourLibrary YourLibraryTest)
+doctest_register_static_library(YourLibrary YourLibraryTest)
 ```
 
 ##  'A la carte' instructions
 
-`doctest_registerlibrary(YourLibrary YourLibraryTest)` does different actions that can be called separately. See below  for the detail of those actions.
+`doctest_register_static_library(YourLibrary YourLibraryTest)` does different actions that can be called separately. See below  for the detail of those actions.
 
 ### auto-generated code
 
