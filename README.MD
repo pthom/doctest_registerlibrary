@@ -1,3 +1,11 @@
+
+
+Note:
+A more recent version of this project provides test registration without requiring code modifications, through the use of cmake `add_library(...OBJECT ...)`. 
+
+It works with catch, googletest and doctest, and is located at 
+https://github.com/pthom/cmake_registertest
+
 # Static library "doctesting" made easy with cmake
 
 #### Motivation
